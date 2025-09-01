@@ -1,16 +1,16 @@
 # 🚀 Flutter API Response Handling System (with Riverpod)
 
-هذا النظام يوفر طريقة **احترافية وموحدة** للتعامل مع استجابات الـ API في تطبيقات Flutter باستخدام **Riverpod + StateNotifier**.
-يساعدك على:
+This system provides a **professional and unified** way to handle API responses in Flutter applications using **Riverpod + StateNotifier**.
+It helps you to:
 
-* ✅ إظهار رسالة نجاح (SnackBar).
-* ❌ إظهار رسالة خطأ (SnackBar).
-* 🌐 التعامل مع أخطاء الإنترنت (Dialog مع زر إعادة المحاولة).
-* 📦 وضع كل شيء في مكان واحد وقابل لإعادة الاستخدام.
+* ✅ Show success messages (SnackBar).
+* ❌ Show error messages (SnackBar).
+* 🌐 Handle network errors (Dialog with Retry button).
+* 📦 Keep everything centralized and reusable.
 
 ---
 
-## 📂 هيكلة المشروع
+## 📂 Project Structure
 
 ```
 lib/
@@ -26,9 +26,9 @@ lib/
 
 ---
 
-## ⚙️ كيفية الاستخدام
+## ⚙️ Usage
 
-### 1️⃣ تعريف موديل موحد للنتائج
+### 1️⃣ Define a unified API result model
 
 ```dart
 // core/api_result.dart
@@ -55,7 +55,7 @@ class ApiNetworkError<T> extends ApiResult<T> {
 
 ---
 
-### 2️⃣ الهاندلر المركزي
+### 2️⃣ Centralized handler
 
 ```dart
 // core/api_handler.dart
@@ -97,7 +97,7 @@ class ApiHandler {
 
 ---
 
-### 3️⃣ الإكستنشن لتبسيط الاستخدام
+### 3️⃣ Extension for easy usage
 
 ```dart
 // core/api_extensions.dart
@@ -114,7 +114,7 @@ extension ApiResultHandler<T> on AsyncValue<ApiResult<T>> {
 
 ---
 
-### 4️⃣ مثال StateNotifier
+### 4️⃣ Example StateNotifier
 
 ```dart
 // features/data/data_notifier.dart
@@ -138,7 +138,7 @@ final dataProvider =
 
 ---
 
-### 5️⃣ مثال في الواجهة
+### 5️⃣ Example UI
 
 ```dart
 // features/data/data_screen.dart
@@ -149,7 +149,7 @@ class DataScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(dataProvider);
 
-    // 🪄 استدعاء السيستم مباشرة
+    // 🪄 Use the system directly
     state.handleApi(
       context,
       onRetry: () => ref.read(dataProvider.notifier).fetchData(),
@@ -180,18 +180,18 @@ class DataScreen extends ConsumerWidget {
 
 ---
 
-## ✨ المزايا
+## ✨ Features
 
-* لا تحتاج تكرار كود الـ SnackBar/Dialog.
-* مناسب لأي `StateNotifier` أو `FutureProvider`.
-* يدعم retry تلقائي عند فقدان الاتصال.
+* No need to repeat SnackBar/Dialog code.
+* Works with any `StateNotifier` or `FutureProvider`.
+* Supports automatic retry on network failure.
 
 ---
 
-## 📝 ملاحظات
+## 📝 Notes
 
-* بإمكانك تخصيص رسائل النجاح/الفشل بسهولة من خلال الـ `ApiResult`.
-* يمكن تطويره لاحقًا ليدعم أنواع أخرى من الأخطاء (Unauthorized, Forbidden...).
+* You can easily customize success/error messages through `ApiResult`.
+* Can be extended later to handle other errors (Unauthorized, Forbidden, etc.).
 
-```}
+```
 ```
